@@ -59,8 +59,12 @@ Ticket () {
     You can also change the delimiter by setting the variable TicketIFS
 
     Examples:
-      Ticket n \"JIRA-1234\" \"This is a description\"
-      git commit -m \"\$t: This is a commit message\"
+      $ Ticket n \"JIRA-1234\" \"This is a description\"
+      $ git commit -m \"\$t: This is a commit message\"
+      $ Ticket
+      JIRA-1234 some description
+      JIRA-456 another ticket
+
     "
     ;;
 
