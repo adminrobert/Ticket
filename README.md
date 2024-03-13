@@ -33,4 +33,7 @@ Track tickets from command line:
     TicketFile location can be changed by setting the variable TicketFile
     You can also change the delimiter by setting the variable TicketIFS
 
+    Examples:
+      Ticket n "JIRA-1234" "This is a description"
+      git commit -m "$t: This is a commit message"
 ```

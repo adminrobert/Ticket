@@ -56,7 +56,12 @@ Ticket () {
     \$t can then be used in commit messages or anywhere else to reference the selected tickets
 
     TicketFile location can be changed by setting the variable TicketFile
-    You can also change the delimiter by setting the variable TicketIFS"
+    You can also change the delimiter by setting the variable TicketIFS
+
+    Examples:
+      Ticket n \"JIRA-1234\" \"This is a description\"
+      git commit -m \"\$t: This is a commit message\"
+    "
     ;;
 
     *) cat "${TicketFile}" ;;
