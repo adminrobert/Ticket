@@ -14,7 +14,7 @@ Ticket () {
   local Rest=("${Args[@]:1}")
   local Selected=()
   case "${Cmd}" in
-    n|new) [ -n "${Rest[*]}" ] && echo "${Rest[0]##*/} ${Rest[*]:1}" >> "${TicketFile}" ;;
+    n|new|a|add) [ -n "${Rest[*]}" ] && echo "${Rest[0]##*/} ${Rest[*]:1} $(date)" >> "${TicketFile}" ;;
 
     s|set)
       local IFS=$'\n'
@@ -40,7 +40,7 @@ Ticket () {
 
     Ticket [n|new <ticket> <description>] [suelh]
 
-        n|new <ticket> <description>
+        n|new|a|add <ticket> <description>
             adds a new ticket to the list (${TicketFile})
         s|set
             sets the variable \$t to the selected tickets (CTRL-D to stop selection)
