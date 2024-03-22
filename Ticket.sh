@@ -14,7 +14,19 @@ Ticket () {
   local Rest=("${Args[@]:1}")
   local Selected=()
   case "${Cmd}" in
-    n|new|a|add) [ -n "${Rest[*]}" ] && echo "${Rest[0]##*/} ${Rest[*]:1} $(date)" >> "${TicketFile}" ;;
+    n|new|a|add)
+      if [ -n "${Rest[*]}" ]
+      then
+        local ID=${Rest[0]##*/}
+        grep -q "^${ID}" "${TicketFile}" \
+          && echo "Ticket ${ID} already exists" \
+          && return 1
+        echo "${ID} | ${Rest[*]:1} | $(date "+%Y/%m/%d-%H:%M:%S")" >> "${TicketFile}"
+        echo "Added: ${ID}"
+      else
+        Ticket h
+      fi
+    ;;
 
     s|set)
       local IFS=$'\n'
@@ -22,7 +34,8 @@ Ticket () {
       unset IFS
       echo "Select multiple tickets, CTRL-D to stop"
       select ticket in "${Tickets[@]}"; do
-        echo "Setting ticket to: ${ticket}, ${ticket%% *}"
+        echo ""
+        echo "Setting: ${ticket}, ${ticket%% *}"
         Selected+=("${ticket%% *}")
       done
       local IFS="${TicketIFS}"
