@@ -2,6 +2,14 @@
 # Ticket Management
 #####
 
+reverse_array () {
+  declare -n src=$1 dst=$2
+  for i in "${!src[@]}"
+  do
+    dst+=("${src[@]: -$(( i + 1 )):1}")
+  done
+}
+
 # This is a function to help with ticket management, it stores a list of tickets to file to easily recall them
 # It sets the variable $t for easy use in commit messages
 Ticket_PS1="${PS1}"
@@ -31,9 +39,11 @@ Ticket () {
     s|set)
       local IFS=$'\n'
       local Tickets=($(<"${TicketFile}"))
+      local Reversed=()
+      reverse_array Tickets Reversed
       unset IFS
       echo "Select multiple tickets, CTRL-D to stop"
-      select ticket in "${Tickets[@]}"; do
+      select ticket in "${Reversed[@]}"; do
         echo ""
         echo "Setting: ${ticket}, ${ticket%% *}"
         Selected+=("${ticket%% *}")
